@@ -1,5 +1,7 @@
 #include "SensitiveDetector.hh"
 
+#include <G4EventManager.hh>
+#include <G4Event.hh>
 #include <G4VisManager.hh>
 
 
@@ -34,9 +36,7 @@ G4bool SensitiveDetector::ProcessHits(G4Step* step, G4TouchableHistory* hist) {
 }
 
 void SensitiveDetector::EndOfEvent(G4HCofThisEvent* hce) {
-    G4cout << "Number of hits: " << hce->GetHC(0)->GetSize() << G4endl;
-    for(size_t i = 0; i < hce->GetHC(0)->GetSize(); i++) {
-        DetectorHit* hit = (DetectorHit*) hce->GetHC(0)->GetHit(i);
-        G4cout << "    " << hit->GetTubeID() << G4endl;
-    }
+    G4int event_id = G4EventManager::GetEventManager()->GetConstCurrentEvent()->GetEventID();
+    G4int hit_count = hce->GetHC(0)->GetSize();
+    G4cout << "[" << event_id << "] Number of hits: " << hit_count << G4endl;
 }
