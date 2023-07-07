@@ -4,6 +4,8 @@
 #include <G4UIExecutive.hh>
 #include <G4VisExecutive.hh>
 
+#include "DataManager.hh"
+#include "DataMessenger.hh"
 #include "DetectorConstruction.hh"
 #include "PhysicsList.hh"
 #include "ActionInitialization.hh"
@@ -11,13 +13,17 @@
 
 
 int main(int argc, char** argv) {
+    DataManager data_manager;
+
     G4RunManager* run_manager = new G4RunManager;
     run_manager->SetUserInitialization(new DetectorConstruction);
     run_manager->SetUserInitialization(new PhysicsList);
-    run_manager->SetUserInitialization(new ActionInitialization);
+    run_manager->SetUserInitialization(new ActionInitialization(&data_manager));
     run_manager->Initialize();
 
     G4UImanager* ui_manager = G4UImanager::GetUIpointer();
+
+    DataMessenger data_messenger(&data_manager);
     
     if(argc == 1) {
         G4VisManager* vis_manager = new G4VisExecutive;
