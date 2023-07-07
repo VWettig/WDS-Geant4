@@ -8,7 +8,7 @@
 
 class DetectorHit : public G4VHit {
 public:
-    DetectorHit(G4int tube_id);
+    DetectorHit(G4int tube_id, G4int track_id);
     DetectorHit(const DetectorHit& hit) = default;
     ~DetectorHit();
 
@@ -22,9 +22,11 @@ public:
     void Print();
 
     inline G4int GetTubeID() const { return tube_id; }
+    inline G4int GetTrackID() const { return track_id; }
 
 private:
     G4int tube_id;
+    G4int track_id;
 };
 
 

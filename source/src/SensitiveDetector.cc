@@ -25,8 +25,9 @@ G4bool SensitiveDetector::ProcessHits(G4Step* step, G4TouchableHistory* hist) {
     (void) hist;
 
     G4int tube_id = step->GetPreStepPoint()->GetTouchable()->GetCopyNumber();
+    G4int track_id = step->GetTrack()->GetTrackID();
 
-    DetectorHit* hit = new DetectorHit(tube_id);
+    DetectorHit* hit = new DetectorHit(tube_id, track_id);
     hits->insert(hit);
 
     if(G4VisManager::GetConcreteInstance())
